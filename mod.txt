@@ -1,0 +1,97 @@
+Private Sub CommandButton1_Click()
+Dim data As String
+Dim slot As Variant
+Dim vndr As String
+Dim cases As String
+Dim picks As String
+Dim wmitem As String
+Dim desc As String
+Dim color As String
+Dim size As String
+Dim typ As String
+Dim whpk As String
+Dim vnpk As String
+Dim recvdt As String
+Dim prime As String
+Dim pkcst As String
+Dim extcst As String
+Dim rw As Integer
+Dim lower As Variant
+Dim upper As Variant
+Dim repln As String
+
+rw = 1
+DC = ActiveSheet.Cells(10, 7).Value
+
+MyFile = Dir(ActiveSheet.Cells(10, 3).Value & "0171_N" & DC & "A24*.html")
+Open ActiveSheet.Cells(10, 3).Value & MyFile For Input As #1
+
+'MyFile = Dir("L:\Rdrive\0171_N" & DC & "A24*.html")
+'Open "L:\RDrive\" & MyFile For Input As #1
+
+Sheets("Menu").Select
+lower = ActiveSheet.Cells(4, 3).Value
+upper = ActiveSheet.Cells(4, 5).Value
+
+Call Clear
+
+Do While Not EOF(1)
+Line Input #1, data
+
+slot = Mid(data, 3, 5)
+vndr = Mid(data, 9, 15)
+cases = Mid(data, 24, 5)
+picks = Mid(data, 30, 5)
+dpt = Mid(data, 36, 2)
+wmitem = Mid(data, 39, 9)
+desc = Mid(data, 49, 20)
+color = Mid(data, 70, 6)
+size = Mid(data, 77, 6)
+typ = Mid(data, 84, 1)
+whpk = Mid(data, 87, 4)
+vnpk = Mid(data, 92, 4)
+recvdt = Mid(data, 97, 8)
+prime = Mid(data, 106, 5)
+pkcst = Mid(data, 112, 7)
+extcst = Mid(data, 120, 9)
+repln = Mid(data, 9, 4)
+
+If repln = "SLOT" Then
+slot = ""
+Else
+End If
+
+If slot >= lower Then
+If slot <= upper Then
+
+Sheets("Report").Select
+rw = rw + 1
+ActiveSheet.Cells(rw, 1).Value = slot
+ActiveSheet.Cells(rw, 2).Value = vndr
+ActiveSheet.Cells(rw, 3).Value = cases
+ActiveSheet.Cells(rw, 4).Value = picks
+ActiveSheet.Cells(rw, 5).Value = dpt
+ActiveSheet.Cells(rw, 6).Value = wmitem
+ActiveSheet.Cells(rw, 7).Value = desc
+ActiveSheet.Cells(rw, 8).Value = color
+ActiveSheet.Cells(rw, 9).Value = size
+ActiveSheet.Cells(rw, 10).Value = typ
+ActiveSheet.Cells(rw, 11).Value = whpk
+ActiveSheet.Cells(rw, 12).Value = vnpk
+ActiveSheet.Cells(rw, 13).Value = recvdt
+ActiveSheet.Cells(rw, 14).Value = prime
+ActiveSheet.Cells(rw, 15).Value = pkcst
+ActiveSheet.Cells(rw, 16).Value = extcst
+
+Else
+End If
+Else
+End If
+Loop
+
+Close #1
+
+End Sub
+
+
+
